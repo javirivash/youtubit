@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import AppContext from './appContext';
 import AppReducer from './appReducer';
 import { youtubeSearch, youtubeVideos } from '../../api/youtube';
@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { ref, set, remove } from 'firebase/database';
 import validateItems from '../../utils/validateItems';
@@ -47,7 +48,25 @@ const AppState = ({ children }) => {
   };
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
+  const [authResolved, setAuthResolved] = useState(false);
   const { setAlert } = useAlertContext();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const user = {
+          id: firebaseUser.uid,
+          email: firebaseUser.email,
+          isLoggedIn: true,
+        };
+        const favorites = await getFavorites(user.id);
+        const updatedLocalFavorites = updateLocalFavorites([], [], favorites);
+        dispatch({ type: LOG_IN_USER, payload: { user, updatedLocalFavorites } });
+      }
+      setAuthResolved(true);
+    });
+    return unsubscribe;
+  }, []);
 
   // GET RESULT VIDEOS
   const getResultVideos = async (query) => {
@@ -283,6 +302,7 @@ const AppState = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
+        authResolved,
         getResultVideos,
         setSelectedVideo,
         loadPlayerById,
