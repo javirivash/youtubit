@@ -44,7 +44,7 @@ const AppState = ({ children }) => {
     shouldShowMenu: false,
     shouldShowLogin: false,
     loading: true,
-    theme: 'light',
+    theme: localStorage.getItem('theme') || 'light',
   };
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
@@ -134,6 +134,7 @@ const AppState = ({ children }) => {
   // TOGGLE THEME
   const toggleTheme = () => {
     const updatedTheme = state.theme === 'light' ? 'dark' : 'light';
+    localStorage.setItem('theme', updatedTheme);
     dispatch({ type: TOGGLE_THEME, payload: updatedTheme });
   };
 
