@@ -14,18 +14,23 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
 } from '../types';
+import updateLocalFavorites from '../../utils/updateLocalFavorites';
 
 export default (state, action) => {
   switch (action.type) {
-    case GET_RESULT_VIDEOS:
+    case GET_RESULT_VIDEOS: {
+      const merged = updateLocalFavorites(
+        action.payload.resultVideos,
+        state.relatedVideos,
+        state.currentFavorites,
+      );
       return {
         ...state,
         searchText: action.payload.query,
-        resultVideos: action.payload.updatedLocalFavorites.results,
-        relatedVideos: action.payload.updatedLocalFavorites.related,
-        currentFavorites: action.payload.updatedLocalFavorites.favorites,
+        resultVideos: merged.results,
         loading: false,
       };
+    }
     case SET_SELECTED_VIDEO:
       return {
         ...state,

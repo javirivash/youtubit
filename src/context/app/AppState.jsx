@@ -74,16 +74,7 @@ const AppState = ({ children }) => {
     try {
       const data = await youtubeSearch({ q: query });
       const resultVideos = validateItems(data.items);
-      const updatedLocalFavorites = updateLocalFavorites(
-        resultVideos,
-        state.relatedVideos,
-        state.currentFavorites,
-      );
-
-      dispatch({
-        type: GET_RESULT_VIDEOS,
-        payload: { query, updatedLocalFavorites },
-      });
+      dispatch({ type: GET_RESULT_VIDEOS, payload: { query, resultVideos } });
     } catch (error) {
       setAlert('Error: Failed fetching results');
       console.error('getResultVideos: Something went wrong... ', error);
