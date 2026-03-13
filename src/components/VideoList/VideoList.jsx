@@ -31,7 +31,7 @@ const VideoList = ({ listTitle, videos }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <StyledTitle>{listTitle}</StyledTitle>
+      {listTitle && <StyledTitle>{listTitle}</StyledTitle>}
       <ItemsContainer role='videoList'>
         {videos.map((item) => (
           <VideoItem key={item.id} video={item} />
@@ -42,7 +42,7 @@ const VideoList = ({ listTitle, videos }) => {
 };
 
 VideoList.propTypes = {
-  listTitle: PropTypes.object.isRequired,
+  listTitle: PropTypes.node,
   videos: PropTypes.array.isRequired,
 };
 

@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import MenuButton from './_children/MenuButton';
-import SideMenu from './_children/SideMenu';
+import { Link } from 'react-router-dom';
 import Search from './_children/Search';
 import LoginButton from './_children/LoginButton';
 import ThemeToggle from './_children/ThemeToggle';
@@ -28,17 +27,25 @@ const Container = styled.div`
   }
 `;
 
+const HomeLink = styled(Link)`
+  font-family: 'Oswald', sans-serif;
+  font-size: 24px;
+  color: #c0c0c0;
+  white-space: nowrap;
+  opacity: 0.7;
+  :hover {
+    opacity: 1;
+  }
+`;
+
 const Header = () => {
   return (
-    <Fragment>
-      <Container>
-        <MenuButton />
-        <Search />
-        <LoginButton />
-        <ThemeToggle />
-      </Container>
-      <SideMenu />
-    </Fragment>
+    <Container>
+      <HomeLink to='/'>YouTubit</HomeLink>
+      <Search />
+      <LoginButton />
+      <ThemeToggle />
+    </Container>
   );
 };
 
