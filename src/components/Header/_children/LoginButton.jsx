@@ -2,18 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../../context/app/appContext';
 import Modal from '../../layout/Modal';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const buttonStyles = `
+export const buttonStyles = css`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #c0c0c0;
   background-color: transparent;
   border: solid 1px #c0c0c0;
   border-radius: 14px;
-  margin-right: 10px;
-  padding: 8px 12px;
-  min-width: 74px;
+  margin-left: 10px;
+  padding: 0 12px;
+  width: 110px;
+  height: 34px;
   cursor: pointer;
   opacity: 0.7;
   :hover {
@@ -24,16 +29,20 @@ const buttonStyles = `
   }
 `;
 
-const StyledButton = styled.button`
-  justify-self: end;
+export const StyledButton = styled.button`
   ${buttonStyles}
 `;
 
-const StyledLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+export const FavoritesLink = styled(Link)`
   ${buttonStyles}
+`;
+
+export const Icon = styled.span`
+  font-size: 16px;
+  height: auto;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 `;
 
 const LoginButton = () => {
@@ -48,15 +57,22 @@ const LoginButton = () => {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      {currentUser.isLoggedIn && (
-        <StyledLink to='/favorites'>Favorites</StyledLink>
-      )}
+    <>
       <StyledButton onClick={onClick}>
-        {currentUser.isLoggedIn ? 'Log out' : 'Sign up'}
+        {currentUser.isLoggedIn ? (
+          <>
+            <Icon className='material-icons'>logout</Icon>
+            Log out
+          </>
+        ) : (
+          <>
+            <Icon className='material-icons'>person</Icon>
+            Sign up
+          </>
+        )}
       </StyledButton>
       <Modal />
-    </div>
+    </>
   );
 };
 

@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Search from './_children/Search';
-import LoginButton from './_children/LoginButton';
-import ThemeToggle from './_children/ThemeToggle';
+import NavControls from './_children/NavControls';
 
 const Container = styled.div`
   display: flex;
@@ -43,8 +42,7 @@ const Header = () => {
     <Container>
       <HomeLink to='/'>YouTubit</HomeLink>
       <Search />
-      <LoginButton />
-      <ThemeToggle />
+      <NavControls />
     </Container>
   );
 };

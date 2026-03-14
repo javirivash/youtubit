@@ -105,12 +105,12 @@ const LoginView = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    signUpUser(emailText, passwordText);
+    signUpUser(emailText.trim(), passwordText);
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    logInUser(emailText, passwordText);
+    logInUser(emailText.trim(), passwordText);
   };
 
   return shouldShowSignup ? (

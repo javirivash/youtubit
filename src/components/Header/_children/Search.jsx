@@ -7,7 +7,7 @@ import { useAlertContext } from '../../../context/alert/alertContext';
 const Form = styled.form`
   display: flex;
   align-items: center;
-  margin: 0 auto;
+  margin: 0 8px;
   width: 300px;
 
   #text {
