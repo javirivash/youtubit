@@ -43,7 +43,7 @@ const AppState = ({ children }) => {
     currentFavorites: [],
     shouldShowMenu: false,
     shouldShowLogin: false,
-    loading: true,
+    loading: false,
     theme: localStorage.getItem('theme') || 'light',
   };
 
@@ -76,6 +76,7 @@ const AppState = ({ children }) => {
       const resultVideos = validateItems(data.items);
       dispatch({ type: GET_RESULT_VIDEOS, payload: { query, resultVideos } });
     } catch (error) {
+      dispatch({ type: GET_RESULT_VIDEOS, payload: { query, resultVideos: [] } });
       setAlert('Error: Failed fetching results');
       console.error('getResultVideos: Something went wrong... ', error);
     }
