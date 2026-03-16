@@ -6,7 +6,7 @@ import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 const config = [
   {
-    ignores: ['build', 'dist', 'node_modules'],
+    ignores: ['build', 'dist', 'node_modules', 'coverage'],
   },
 
   // JS + React Configuration
