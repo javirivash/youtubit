@@ -33,9 +33,9 @@ describe('LoginButton', () => {
       ).toBeInTheDocument();
     });
 
-    it('logs out the current user when clicked', () => {
+    it('logs out the current user when clicked', async () => {
       renderComponent();
-      userEvent.click(screen.getByRole('button'));
+      await userEvent.click(screen.getByRole('button'));
       expect(logOutUser).toHaveBeenCalled();
     });
   });
@@ -48,9 +48,9 @@ describe('LoginButton', () => {
       ).toBeInTheDocument();
     });
 
-    it('activates the log in view when clicked', () => {
+    it('activates the log in view when clicked', async () => {
       renderComponent({ currentUser: {} });
-      userEvent.click(screen.getByRole('button'));
+      await userEvent.click(screen.getByRole('button'));
       expect(activateLogin).toHaveBeenCalled();
     });
   });

@@ -4,7 +4,7 @@ import AppContext from '../../context/app/appContext';
 import { currentUser, resultVideos } from '../../utils/testMocks';
 import VideoList from './VideoList';
 vi.mock('react-router-dom', () => ({
-  useHistory: () => [],
+  useNavigate: () => vi.fn(),
   useLocation: () => ({ pathname: '/' }),
 }));
 

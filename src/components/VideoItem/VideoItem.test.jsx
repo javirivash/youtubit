@@ -5,7 +5,7 @@ import AppContext from '../../context/app/appContext';
 import { currentUser, selectedVideo } from '../../utils/testMocks';
 import VideoItem from './VideoItem';
 vi.mock('react-router-dom', () => ({
-  useHistory: () => [],
+  useNavigate: () => vi.fn(),
   useLocation: () => ({ pathname: '/' }),
 }));
 
@@ -46,9 +46,9 @@ describe('VideoItem', () => {
     );
   });
 
-  it('calls setSelectedVideo when clicking the item', () => {
+  it('calls setSelectedVideo when clicking the item', async () => {
     renderComponent();
-    userEvent.click(screen.getByRole('videoItem'));
-    expect(setSelectedVideo).toHaveBeenCalledWith(selectedVideo, '/');
+    await userEvent.click(screen.getByRole('videoItem'));
+    expect(setSelectedVideo).toHaveBeenCalledWith(selectedVideo);
   });
 });

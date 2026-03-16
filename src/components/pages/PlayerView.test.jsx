@@ -8,11 +8,13 @@ import {
   relatedVideos,
 } from '../../utils/testMocks';
 vi.mock('react-router-dom', () => ({
-  useHistory: () => [],
   useLocation: () => ({ pathname: '/player' }),
+  useNavigate: () => vi.fn(),
+  useParams: () => ({ videoId: selectedVideo.id }),
 }));
 
 describe('PlayerView', () => {
+  const loadPlayerById = vi.fn();
   const renderComponent = (contextValue = {}) => {
     render(
       <AppContext.Provider
@@ -20,6 +22,8 @@ describe('PlayerView', () => {
           currentUser,
           selectedVideo,
           relatedVideos,
+          loading: false,
+          loadPlayerById,
           ...contextValue,
         }}
       >

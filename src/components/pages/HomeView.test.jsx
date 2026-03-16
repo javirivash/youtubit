@@ -4,7 +4,7 @@ import AppContext from '../../context/app/appContext';
 import { currentUser, resultVideos } from '../../utils/testMocks';
 import HomeView from './HomeView';
 vi.mock('react-router-dom', () => ({
-  useHistory: () => [],
+  useNavigate: () => vi.fn(),
   useLocation: () => ({ pathname: '/' }),
 }));
 
@@ -17,6 +17,7 @@ describe('HomeView', () => {
           searchText,
           currentUser,
           resultVideos,
+          loading: false,
           ...contextValue,
         }}
       >
@@ -25,24 +26,13 @@ describe('HomeView', () => {
     );
   };
 
-  it('renders the main title', () => {
-    renderComponent();
-    expect(
-      screen.getByRole('heading', { name: /Welcome to YouTubit/i }),
-    ).toBeInTheDocument();
-  });
-
-  it('renders the videos list title including search text', () => {
-    renderComponent({ searchText: 'Messi' });
-    expect(
-      screen.getByRole('heading', {
-        name: /Showing search results for Messi/i,
-      }),
-    ).toBeInTheDocument();
-  });
-
   it('renders the videos list', () => {
     renderComponent();
     expect(screen.getByRole('videoList')).toBeInTheDocument();
+  });
+
+  it('renders the videos array provided as videoItem components', () => {
+    renderComponent();
+    expect(screen.getAllByRole('videoItem').length).toBe(resultVideos.length);
   });
 });

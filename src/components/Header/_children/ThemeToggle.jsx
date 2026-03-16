@@ -25,7 +25,7 @@ const Switch = styled.button`
 
 const Knob = styled.span`
   position: absolute;
-  left: ${(props) => (props.isDark ? '30px' : '4px')};
+  left: ${(props) => (props.$isDark ? '30px' : '4px')};
   top: 50%;
   transform: translateY(-50%);
   transition: left 0.2s ease;
@@ -41,7 +41,7 @@ const ThemeToggle = () => {
 
   return (
     <Switch onClick={toggleTheme} aria-label='Toggle theme'>
-      <Knob isDark={isDark} className='material-icons'>
+      <Knob $isDark={isDark} className='material-icons'>
         {isDark ? 'dark_mode' : 'light_mode'}
       </Knob>
     </Switch>

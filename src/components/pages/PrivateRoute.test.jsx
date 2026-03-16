@@ -6,32 +6,32 @@ import { MemoryRouter } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
 describe('PrivateRoute', () => {
-  const MockComponent = () => {
-    return <h1>Renders Alright!</h1>;
-  };
   const renderComponent = (contextValue = {}) => {
     render(
       <AppContext.Provider
         value={{
           currentUser,
+          authResolved: true,
           ...contextValue,
         }}
       >
         <MemoryRouter>
-          <PrivateRoute component={MockComponent} />
+          <PrivateRoute>
+            <h1>Renders Alright!</h1>
+          </PrivateRoute>
         </MemoryRouter>
       </AppContext.Provider>,
     );
   };
 
-  it('renders component when there is an user logged in', () => {
+  it('renders children when there is an user logged in', () => {
     renderComponent();
     expect(
       screen.getByRole('heading', { name: /Renders Alright!/i }),
     ).toBeInTheDocument();
   });
 
-  it('does not render the component when there is no user logged in', () => {
+  it('does not render children when there is no user logged in', () => {
     renderComponent({ currentUser: {} });
     expect(
       screen.queryByRole('heading', { name: /Renders Alright!/i }),

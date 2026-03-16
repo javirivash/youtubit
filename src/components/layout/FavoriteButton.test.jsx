@@ -28,11 +28,11 @@ describe('FavoriteButton', () => {
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
-  it("adds or removes the video from favorites each time it's clicked", () => {
+  it("adds or removes the video from favorites each time it's clicked", async () => {
     renderComponent();
-    userEvent.click(screen.getByRole('button'));
-    userEvent.click(screen.getByRole('button'));
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(addFavorite).toHaveBeenCalledTimes(2);
     expect(removeFavorite).toHaveBeenCalledTimes(1);
     expect(addFavorite).toHaveBeenCalledWith({

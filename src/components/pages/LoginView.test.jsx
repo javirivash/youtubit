@@ -33,48 +33,54 @@ describe('LoginView', () => {
       expect(signUpHeading).toBeInTheDocument();
     });
 
-    it('calls signUpUser with email and password values', () => {
+    it('calls signUpUser with email and password values', async () => {
       renderComponent();
       const someEmail = 'someemail@example.com';
       const somePassword = 'S4fePassw0rd.';
-      userEvent.type(screen.getByPlaceholderText('Email'), someEmail);
-      userEvent.type(screen.getByPlaceholderText('Password'), somePassword);
-      userEvent.click(screen.getByRole('button', { name: /Sign up/i }));
+      await userEvent.type(screen.getByPlaceholderText('Email'), someEmail);
+      await userEvent.type(
+        screen.getByPlaceholderText('Password'),
+        somePassword,
+      );
+      await userEvent.click(screen.getByRole('button', { name: /Sign up/i }));
       expect(signUpUser).toHaveBeenCalledWith(someEmail, somePassword);
     });
 
-    it('switches to the Log in form by clicking the toggle', () => {
+    it('switches to the Log in form by clicking the toggle', async () => {
       renderComponent();
-      userEvent.click(screen.getByRole('button', { name: /Log in/i }));
+      await userEvent.click(screen.getByRole('button', { name: /Log in/i }));
       const logInHeading = screen.getByRole('heading', {
         name: /Enter your email and password/i,
       });
       expect(logInHeading).toBeInTheDocument();
     });
 
-    it('calls deactivateLogin when clicking the close button', () => {
+    it('calls deactivateLogin when clicking the close button', async () => {
       renderComponent();
-      userEvent.click(screen.getByRole('button', { name: /close/i }));
+      await userEvent.click(screen.getByRole('button', { name: /close/i }));
       expect(deactivateLogin).toHaveBeenCalled();
     });
   });
 
   describe('Log in form', () => {
-    it('calls logInUser with email and password values', () => {
+    it('calls logInUser with email and password values', async () => {
       renderComponent();
       const email = 'knownemail@example.com';
       const password = 'S4f3RP4ssw0rd$';
-      userEvent.click(screen.getByRole('button', { name: /Log in/i }));
-      userEvent.type(screen.getByPlaceholderText('Email'), email);
-      userEvent.type(screen.getByPlaceholderText('Password'), password);
-      userEvent.click(screen.getByRole('button', { name: /Log in/i }));
+      await userEvent.click(screen.getByRole('button', { name: /Log in/i }));
+      await userEvent.type(screen.getByPlaceholderText('Email'), email);
+      await userEvent.type(
+        screen.getByPlaceholderText('Password'),
+        password,
+      );
+      await userEvent.click(screen.getByRole('button', { name: /Log in/i }));
       expect(logInUser).toHaveBeenCalled();
     });
 
-    it('switches back to the Sign up form by clicking the toggle', () => {
+    it('switches back to the Sign up form by clicking the toggle', async () => {
       renderComponent();
-      userEvent.click(screen.getByRole('button', { name: /Log in/i }));
-      userEvent.click(screen.getByRole('button', { name: /Sign up/i }));
+      await userEvent.click(screen.getByRole('button', { name: /Log in/i }));
+      await userEvent.click(screen.getByRole('button', { name: /Sign up/i }));
       const signUpHeading = screen.getByRole('heading', {
         name: /Enter a new email and password/i,
       });

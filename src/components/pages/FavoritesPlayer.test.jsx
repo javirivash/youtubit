@@ -8,11 +8,13 @@ import {
   currentFavorites,
 } from '../../utils/testMocks';
 vi.mock('react-router-dom', () => ({
-  useHistory: () => [],
   useLocation: () => ({ pathname: '/favorites/player' }),
+  useNavigate: () => vi.fn(),
+  useParams: () => ({ videoId: selectedVideo.id }),
 }));
 
 describe('FavoritesPlayer', () => {
+  const loadPlayerById = vi.fn();
   const renderComponent = (contextValue = {}) => {
     render(
       <AppContext.Provider
@@ -20,6 +22,8 @@ describe('FavoritesPlayer', () => {
           currentUser,
           selectedVideo,
           currentFavorites,
+          loading: false,
+          loadPlayerById,
           ...contextValue,
         }}
       >

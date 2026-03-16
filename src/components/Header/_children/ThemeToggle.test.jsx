@@ -19,12 +19,12 @@ describe('ThemeToggle', () => {
     );
   };
 
-  it("toggles the theme every time it's clicked", () => {
+  it("toggles the theme every time it's clicked", async () => {
     renderComponent();
-    userEvent.click(screen.getByRole('button'));
-    userEvent.click(screen.getByRole('button'));
-    userEvent.click(screen.getByRole('button'));
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(toggleTheme).toHaveBeenCalledTimes(4);
   });
 });

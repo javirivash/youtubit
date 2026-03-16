@@ -4,7 +4,7 @@ import FavoritesView from './FavoritesView';
 import AppContext from '../../context/app/appContext';
 import { currentUser, currentFavorites } from '../../utils/testMocks';
 vi.mock('react-router-dom', () => ({
-  useHistory: () => [],
+  useNavigate: () => vi.fn(),
   useLocation: () => ({ pathname: '/favorites' }),
 }));
 
@@ -15,6 +15,7 @@ describe('FavoritesView', () => {
         value={{
           currentUser,
           currentFavorites,
+          loading: false,
           ...contextValue,
         }}
       >
@@ -23,24 +24,22 @@ describe('FavoritesView', () => {
     );
   };
 
-  it('renders videos list title', () => {
-    renderComponent();
-    expect(
-      screen.getByRole('heading', { name: /These are your favorite videos/i }),
-    ).toBeInTheDocument();
-  });
-
-  it('renders alternative title when there are no favorite videos', () => {
-    renderComponent({ currentFavorites: [] });
-    expect(
-      screen.getByRole('heading', {
-        name: /Your favorite videos will show here/i,
-      }),
-    ).toBeInTheDocument();
-  });
-
   it('renders videos list', () => {
     renderComponent();
     expect(screen.getByRole('videoList')).toBeInTheDocument();
+  });
+
+  it('renders favorite videos as video items', () => {
+    renderComponent();
+    expect(screen.getAllByRole('videoItem').length).toBe(
+      currentFavorites.length,
+    );
+  });
+
+  it('renders empty list when there are no favorite videos', () => {
+    renderComponent({ currentFavorites: [] });
+    const list = screen.getByRole('videoList');
+    expect(list).toBeInTheDocument();
+    expect(list.children.length).toBe(0);
   });
 });
