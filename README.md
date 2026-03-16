@@ -1,4 +1,4 @@
-# Youtubit
+# YouTubit
 
 A YouTube-inspired video browsing app built as part of the **React Bootcamp** at [Wizeline](https://www.wizeline.com/). Users can search for videos, watch them, discover related videos, and sign up to save favorites to a personal list — all with light and dark theme support.
 
@@ -50,7 +50,7 @@ A YouTube-inspired video browsing app built as part of the **React Bootcamp** at
 src/
 ├── api/              # YouTube API client (calls Netlify Functions)
 ├── components/
-│   ├── Header/       # App header with search, theme toggle, auth, side menu
+│   ├── Header/       # App header with search, theme toggle, auth, mobile menu
 │   ├── Player/       # Video player and details panel
 │   ├── VideoItem/    # Single video card (thumbnail + metadata)
 │   ├── VideoList/    # Grid of VideoItems
