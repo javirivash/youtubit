@@ -54,6 +54,7 @@ function TestConsumer({ onContext }) {
       <span data-testid="favoritesCount">{context.currentFavorites.length}</span>
       <span data-testid="selectedVideoId">{context.selectedVideo?.id || 'none'}</span>
       <span data-testid="relatedCount">{context.relatedVideos.length}</span>
+      <span data-testid="authResolved">{String(context.authResolved)}</span>
       <span data-testid="alert">{alertContext.alert || 'none'}</span>
     </div>
   );
@@ -447,10 +448,12 @@ describe('AppState action creators', () => {
   });
 
   describe('onAuthStateChanged', () => {
-    it('sets user and fetches favorites when Firebase reports logged-in user', async () => {
+    it('sets user, fetches favorites, and sets authResolved when logged-in user', async () => {
       getFavorites.mockResolvedValue(currentFavorites);
 
       renderWithContext();
+
+      expect(screen.getByTestId('authResolved')).toHaveTextContent('false');
 
       await act(async () =>
         authCallback({ uid: 'uid-abc', email: 'auto@test.com' }),
@@ -461,15 +464,19 @@ describe('AppState action creators', () => {
         'auto@test.com',
       );
       expect(screen.getByTestId('favoritesCount')).toHaveTextContent('3');
+      expect(screen.getByTestId('authResolved')).toHaveTextContent('true');
     });
 
-    it('does not set user when Firebase reports no user', async () => {
+    it('sets authResolved without setting user when no user', async () => {
       renderWithContext();
+
+      expect(screen.getByTestId('authResolved')).toHaveTextContent('false');
 
       await act(async () => authCallback(null));
 
       expect(screen.getByTestId('currentUser')).toHaveTextContent('none');
       expect(screen.getByTestId('favoritesCount')).toHaveTextContent('0');
+      expect(screen.getByTestId('authResolved')).toHaveTextContent('true');
     });
   });
 
