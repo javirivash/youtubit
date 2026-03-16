@@ -7,7 +7,6 @@ import {
   TOGGLE_THEME,
   ACTIVATE_LOGIN,
   DEACTIVATE_LOGIN,
-  TOGGLE_MENU,
   SIGN_UP_USER,
   LOG_IN_USER,
   LOG_OUT_USER,
@@ -71,11 +70,6 @@ export default (state, action) => {
       return {
         ...state,
         shouldShowLogin: false,
-      };
-    case TOGGLE_MENU:
-      return {
-        ...state,
-        shouldShowMenu: action.payload,
       };
     case SIGN_UP_USER:
       return {

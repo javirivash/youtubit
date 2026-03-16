@@ -25,7 +25,6 @@ import {
   TOGGLE_THEME,
   ACTIVATE_LOGIN,
   DEACTIVATE_LOGIN,
-  TOGGLE_MENU,
   SIGN_UP_USER,
   LOG_IN_USER,
   LOG_OUT_USER,
@@ -41,7 +40,6 @@ const AppState = ({ children }) => {
     relatedVideos: [],
     currentUser: {},
     currentFavorites: [],
-    shouldShowMenu: false,
     shouldShowLogin: false,
     loading: false,
     theme: localStorage.getItem('theme') || 'light',
@@ -147,12 +145,6 @@ const AppState = ({ children }) => {
   // DEACTIVATE LOGIN
   const deactivateLogin = () => {
     dispatch({ type: DEACTIVATE_LOGIN });
-  };
-
-  //TOGGLE MENU
-  const toggleMenu = () => {
-    const updatedState = !state.shouldShowMenu;
-    dispatch({ type: TOGGLE_MENU, payload: updatedState });
   };
 
   // SIGN UP USER
@@ -303,7 +295,6 @@ const AppState = ({ children }) => {
         toggleTheme,
         activateLogin,
         deactivateLogin,
-        toggleMenu,
         signUpUser,
         logInUser,
         logOutUser,

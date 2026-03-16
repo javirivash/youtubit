@@ -8,7 +8,6 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const ACTIVATE_LOGIN = 'ACTIVATE_LOGIN';
 export const DEACTIVATE_LOGIN = 'DEACTIVATE_LOGIN';
-export const TOGGLE_MENU = 'TOGGLE_MENU';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const LOG_IN_USER = 'LOG_IN_USER';
 export const LOG_OUT_USER = 'LOG_OUT_USER';

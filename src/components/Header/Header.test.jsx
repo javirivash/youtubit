@@ -11,11 +11,8 @@ vi.mock('react-router-dom', () => ({
 }));
 
 describe('Header', () => {
-  const shouldShowMenu = false;
   const shouldShowLogin = true;
-  const toggleMenu = vi.fn();
   const setAlert = vi.fn();
-  const initApis = vi.fn();
   const activateLogin = vi.fn();
   const logOutUser = vi.fn();
   const toggleTheme = vi.fn();
@@ -27,10 +24,7 @@ describe('Header', () => {
         <AppContext.Provider
           value={{
             currentUser,
-            shouldShowMenu,
             shouldShowLogin,
-            toggleMenu,
-            initApis,
             getResultVideos,
             activateLogin,
             logOutUser,

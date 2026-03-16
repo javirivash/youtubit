@@ -39,6 +39,8 @@ const HamburgerButton = styled.button`
   height: 34px;
   width: 34px;
   font-size: 24px;
+  transition: transform 0.3s ease-out, opacity 0.2s ease-out;
+  transform: ${(props) => (props.$isOpen ? 'rotate(90deg)' : 'rotate(0deg)')};
   :hover {
     opacity: 1;
   }
@@ -56,6 +58,19 @@ const Dropdown = styled.div`
   flex-direction: column;
   z-index: 100;
   min-width: 150px;
+  overflow: hidden;
+  transform-origin: top right;
+  animation: ${(props) => (props.$closing ? 'dropdownSlideUp' : 'dropdownSlideDown')} 0.25s ease-out forwards;
+
+  @keyframes dropdownSlideDown {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes dropdownSlideUp {
+    from { clip-path: inset(0 0 0 0); }
+    to { clip-path: inset(0 0 100% 0); }
+  }
 
   & > *:last-child {
     border-bottom: none;
@@ -115,13 +130,34 @@ const Backdrop = styled.div`
   position: fixed;
   inset: 64px 0 0 0;
   z-index: 99;
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: ${(props) => (props.$closing ? 'backdropFadeOut' : 'backdropFadeIn')} 0.25s ease-out forwards;
+
+  @keyframes backdropFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes backdropFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
 `;
+
+const ANIMATION_MS = 250;
 
 const NavControls = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const { currentUser, logOutUser, activateLogin } = useAppContext();
 
-  const close = () => setIsOpen(false);
+  const close = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, ANIMATION_MS);
+  };
 
   return (
     <>
@@ -149,18 +185,19 @@ const NavControls = () => {
 
       <MobileControls>
         <HamburgerButton
-          onClick={() => setIsOpen((o) => !o)}
+          onClick={() => (isOpen ? close() : setIsOpen(true))}
           aria-label='Menu'
           className='material-icons'
+          $isOpen={isOpen && !isClosing}
         >
-          {isOpen ? 'close' : 'menu'}
+          {isOpen && !isClosing ? 'close' : 'menu'}
         </HamburgerButton>
 
         {isOpen &&
           createPortal(
             <>
-              <Backdrop onClick={close} />
-              <Dropdown>
+              <Backdrop onClick={close} $closing={isClosing} />
+              <Dropdown $closing={isClosing}>
                 <ThemeRow>
                   <ThemeToggle />
                   <span>Theme</span>
