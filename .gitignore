@@ -3,6 +3,7 @@
 
 # Build output
 /dist
+/coverage
 
 # Local env files
 .DS_Store
