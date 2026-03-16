@@ -8,7 +8,7 @@ Always create a new branch off `master` before starting work on any new feature 
 
 Before committing any changes, always run build (`npm run build`) and lint (`npm run lint`) to catch errors early.
 
-After pushing a branch, check whether a PR already exists for it (`gh pr view --json url 2>/dev/null`). If no PR exists, create one automatically using `gh pr create` with a descriptive title and body summarizing the changes. The PR should target `master`.
+After pushing a branch, check whether a PR already exists for it (`gh pr view <branch> --repo javirivash/youtubit --json url 2>/dev/null`). If no PR exists, create one automatically using `gh pr create --repo javirivash/youtubit` with a descriptive title and body summarizing the changes. The PR should target `master`. Always pass `--repo javirivash/youtubit` to all `gh` commands to avoid defaulting to the upstream fork.
 
 ## Commands
 
