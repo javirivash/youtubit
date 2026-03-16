@@ -43,7 +43,7 @@ const Form = styled.form`
 const initQuery = 'Wizeline Academy';
 
 const Search = () => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(initQuery);
   const { getResultVideos } = useAppContext();
   const { setAlert } = useAlertContext();
   const { pathname } = useLocation();

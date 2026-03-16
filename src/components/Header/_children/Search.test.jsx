@@ -5,8 +5,8 @@ import AlertContext from '../../../context/alert/alertContext';
 import AppContext from '../../../context/app/appContext';
 import Search from './Search';
 vi.mock('react-router-dom', () => ({
-  useHistory: () => [],
   useLocation: () => ({ pathname: '/player' }),
+  useNavigate: () => vi.fn(),
 }));
 
 describe('Search', () => {
@@ -30,24 +30,27 @@ describe('Search', () => {
     );
   };
 
-  it('calls initApis once at first render', () => {
+  it('calls getResultVideos once at first render', () => {
     renderComponent();
-    expect(initApis).toHaveBeenCalledTimes(1);
+    expect(getResultVideos).toHaveBeenCalledTimes(1);
   });
 
-  it('calls getResultVideos onSubmit with the input text', () => {
+  it('calls getResultVideos onSubmit with the input text', async () => {
     const query = 'Bohemian Rhapsody';
     renderComponent();
-    userEvent.type(screen.getByRole('textbox'), query);
-    userEvent.click(screen.getByRole('button', { name: /search/i }));
+    const input = screen.getByRole('textbox');
+    await userEvent.clear(input);
+    await userEvent.type(input, query);
+    await userEvent.click(screen.getByRole('button', { name: /search/i }));
     expect(getResultVideos).toHaveBeenCalledWith(query);
   });
 
-  it('calls setAlert with a message when an empty query is submitted', () => {
-    const query = '';
+  it('calls setAlert with a message when an empty query is submitted', async () => {
     renderComponent();
-    userEvent.type(screen.getByRole('textbox'), query);
-    userEvent.click(screen.getByRole('button', { name: /search/i }));
+    getResultVideos.mockClear();
+    const input = screen.getByRole('textbox');
+    await userEvent.clear(input);
+    await userEvent.click(screen.getByRole('button', { name: /search/i }));
     expect(getResultVideos).not.toHaveBeenCalled();
     expect(setAlert).toHaveBeenCalledWith('Enter a search text');
   });
