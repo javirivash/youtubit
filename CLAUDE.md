@@ -50,6 +50,7 @@ Custom hooks `useAppContext()` and `useAlertContext()` provide access with error
 
 - Components are PascalCase `.jsx`, utilities are camelCase `.js`
 - Tests are colocated: `Component.test.jsx` next to `Component.jsx`
+- Netlify function tests live in `src/netlify-functions/` (not in `netlify/functions/` to avoid Netlify bundling them as serverless functions)
 - Child components go in `_children/` subdirectories
 - Styled components are defined inline in each component file
 - Mock data for tests lives in `src/utils/testMocks.js`
