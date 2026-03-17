@@ -467,6 +467,31 @@ describe('AppState action creators', () => {
       expect(screen.getByTestId('authResolved')).toHaveTextContent('true');
     });
 
+    it('does not wipe resultVideos when auth resolves after search', async () => {
+      const apiItems = [makeApiItem('vid1'), makeApiItem('vid2')];
+      youtubeSearch.mockResolvedValue({ items: apiItems });
+      getFavorites.mockResolvedValue(currentFavorites);
+
+      const { contextRef } = renderWithContext();
+
+      // Search loads videos first
+      await act(async () => {
+        await contextRef.current.getResultVideos('wizeline');
+      });
+      expect(screen.getByTestId('resultCount')).toHaveTextContent('2');
+
+      // Then auth resolves with a logged-in user
+      await act(async () =>
+        authCallback({ uid: 'uid-abc', email: 'auto@test.com' }),
+      );
+
+      // Videos should still be there
+      expect(screen.getByTestId('resultCount')).toHaveTextContent('2');
+      expect(screen.getByTestId('currentUser')).toHaveTextContent(
+        'auto@test.com',
+      );
+    });
+
     it('sets authResolved without setting user when no user', async () => {
       renderWithContext();
 

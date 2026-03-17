@@ -107,11 +107,13 @@ netlify dev
 ```bash
 npm test             # watch mode
 npm run test:run     # single run
-npm run test:coverage
+npm run test:coverage # coverage report with 80% threshold enforcement
 ```
+
+The test suite includes 140+ tests covering components, state management, utilities, routing, and Netlify functions. Coverage thresholds (80% statements, branches, functions, and lines) are enforced in CI — PRs that drop below will fail.
 
 ---
 
 ## Deployment
 
-The app is deployed on Netlify with continuous deployment from the `master` branch. Environment variables are configured in the Netlify project settings. The `netlify.toml` configures the build command, publish directory, and a catch-all redirect for client-side routing.
+The app is deployed on Netlify with continuous deployment from the `master` branch. A GitHub Actions CI pipeline runs lint, tests with coverage, and build on every pull request. Environment variables are configured in the Netlify project settings. The `netlify.toml` configures the build command, publish directory, and a catch-all redirect for client-side routing.

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Workflow
 
-Always create a new branch off `master` before starting work on any new feature or fix.
+Always create a new branch off `master` before starting work on any new feature or fix. Never commit directly to `master` — all changes must go through a pull request.
 
 When changing or adding code, review existing tests for affected modules and update or add tests to maintain coverage. New features need new tests. Bug fixes need a test that would have caught the bug. Refactors must keep existing tests passing. Run `npm run test:coverage` to verify coverage thresholds (80%) are still met.
 
