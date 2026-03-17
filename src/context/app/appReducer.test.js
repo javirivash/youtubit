@@ -162,20 +162,37 @@ describe('appReducer', () => {
   });
 
   describe('LOG_IN_USER', () => {
-    it('sets currentUser and merges favorites into videos', () => {
-      const updatedLocalFavorites = {
-        results: resultVideos,
-        related: relatedVideos,
-        favorites: currentFavorites,
+    it('sets currentUser and merges favorites with existing videos', () => {
+      const stateWithVideos = {
+        ...baseState,
+        resultVideos,
+        relatedVideos,
       };
-      const state = appReducer(baseState, {
+      const state = appReducer(stateWithVideos, {
         type: LOG_IN_USER,
-        payload: { user: currentUser, updatedLocalFavorites },
+        payload: { user: currentUser, favorites: currentFavorites },
       });
       expect(state.currentUser).toBe(currentUser);
-      expect(state.resultVideos).toBe(resultVideos);
-      expect(state.relatedVideos).toBe(relatedVideos);
-      expect(state.currentFavorites).toBe(currentFavorites);
+      expect(state.currentFavorites).toEqual(currentFavorites);
+      // Videos that match favorites should be marked
+      const matched = state.resultVideos.find(
+        (v) => v.id === currentFavorites[0].id,
+      );
+      expect(matched.isFavorite).toBe(true);
+    });
+
+    it('preserves existing videos when logging in', () => {
+      const stateWithVideos = {
+        ...baseState,
+        resultVideos,
+        relatedVideos,
+      };
+      const state = appReducer(stateWithVideos, {
+        type: LOG_IN_USER,
+        payload: { user: currentUser, favorites: [] },
+      });
+      expect(state.resultVideos).toHaveLength(resultVideos.length);
+      expect(state.relatedVideos).toHaveLength(relatedVideos.length);
     });
   });
 

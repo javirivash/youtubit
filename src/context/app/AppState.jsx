@@ -58,8 +58,7 @@ const AppState = ({ children }) => {
           isLoggedIn: true,
         };
         const favorites = await getFavorites(user.id);
-        const updatedLocalFavorites = updateLocalFavorites([], [], favorites);
-        dispatch({ type: LOG_IN_USER, payload: { user, updatedLocalFavorites } });
+        dispatch({ type: LOG_IN_USER, payload: { user, favorites } });
       }
       setAuthResolved(true);
     });
@@ -177,11 +176,7 @@ const AppState = ({ children }) => {
   // LOG IN USER
   const logInUser = async (email, password) => {
     let user = {};
-    let updatedLocalFavorites = {
-      results: state.resultVideos,
-      related: state.relatedVideos,
-      favorites: state.currentFavorites,
-    };
+    let favorites = state.currentFavorites;
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -193,12 +188,7 @@ const AppState = ({ children }) => {
         email: userCredential.user.email,
         isLoggedIn: true,
       };
-      const favorites = await getFavorites(user.id);
-      updatedLocalFavorites = updateLocalFavorites(
-        state.resultVideos,
-        state.relatedVideos,
-        favorites,
-      );
+      favorites = await getFavorites(user.id);
       deactivateLogin();
       setAlert(`You've successfully logged in as ${user.email}`);
     } catch (error) {
@@ -207,7 +197,7 @@ const AppState = ({ children }) => {
 
     dispatch({
       type: LOG_IN_USER,
-      payload: { user, updatedLocalFavorites },
+      payload: { user, favorites },
     });
   };
 

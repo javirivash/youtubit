@@ -77,14 +77,20 @@ export default (state, action) => {
         currentUser: action.payload,
         currentFavorites: [],
       };
-    case LOG_IN_USER:
+    case LOG_IN_USER: {
+      const merged = updateLocalFavorites(
+        state.resultVideos,
+        state.relatedVideos,
+        action.payload.favorites,
+      );
       return {
         ...state,
         currentUser: action.payload.user,
-        resultVideos: action.payload.updatedLocalFavorites.results,
-        relatedVideos: action.payload.updatedLocalFavorites.related,
-        currentFavorites: action.payload.updatedLocalFavorites.favorites,
+        resultVideos: merged.results,
+        relatedVideos: merged.related,
+        currentFavorites: merged.favorites,
       };
+    }
     case LOG_OUT_USER:
       return {
         ...state,
