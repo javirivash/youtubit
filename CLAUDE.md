@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Always create a new branch off `master` before starting work on any new feature or fix.
 
+When changing or adding code, review existing tests for affected modules and update or add tests to maintain coverage. New features need new tests. Bug fixes need a test that would have caught the bug. Refactors must keep existing tests passing. Run `npm run test:coverage` to verify coverage thresholds (80%) are still met.
+
 Before committing any changes, always run lint (`npm run lint`), tests (`npm run test:coverage`), and build (`npm run build`) to catch errors early.
 
 After pushing a branch, check whether a PR already exists for it (`gh pr view <branch> --repo javirivash/youtubit --json url 2>/dev/null`). If no PR exists, create one automatically using `gh pr create --repo javirivash/youtubit` with a descriptive title and body summarizing the changes. The PR should target `master`. Always pass `--repo javirivash/youtubit` to all `gh` commands to avoid defaulting to the upstream fork.
