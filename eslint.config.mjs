@@ -65,6 +65,16 @@ const config = [
     },
   },
 
+  // Netlify Function Tests (Node globals needed)
+  {
+    files: ['src/netlify-functions/**/*.test.{js,jsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+
   // Prettier Override (Always Last)
   eslintConfigPrettier,
 ];

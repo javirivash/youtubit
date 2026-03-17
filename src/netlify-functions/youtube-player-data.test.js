@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { handler } from './youtube-player-data.js';
+import { handler } from '../../netlify/functions/youtube-player-data.js';
 
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
